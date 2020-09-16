@@ -1,12 +1,12 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
+import { bookAddedToCart, bookRemovedFromCart, allBooksRemovedFromCart } from '../../actions';
 import './shopping-cart-table.css';
 
 const ShoppingCartTable = ({ items, total, onIncrease, onDecrease, onDelete }) => {
     const renderRow = (item, idx) => {
-        const { id, title, count, price } = item;
-        const total = count * price;
+        const { id, title, count, price, total } = item;
         return (
             <tr key={id}>
                 <td>{idx + 1}</td>
@@ -15,11 +15,6 @@ const ShoppingCartTable = ({ items, total, onIncrease, onDecrease, onDelete }) =
                 <td>${price}</td>
                 <td>${total}</td>
                 <td>
-                    <button 
-                        onClick={() => onDelete(id)}
-                        className="btn btn-outline-danger btn-sm">
-                            <i className="fa fa-trash-o" />
-                    </button>
                     <button
                         onClick={() => onIncrease(id)}
                         className="btn btn-outline-success btn-sm">
@@ -29,6 +24,11 @@ const ShoppingCartTable = ({ items, total, onIncrease, onDecrease, onDelete }) =
                         onClick={() => onDecrease(id)}
                         className="btn btn-outline-warning btn-sm">
                             <i className="fa fa-minus-circle" />
+                    </button>
+                    <button 
+                        onClick={() => onDelete(id)}
+                        className="btn btn-outline-danger btn-sm">
+                            <i className="fa fa-trash-o" />
                     </button>
                 </td>
             </tr>
@@ -69,19 +69,11 @@ const mapStateToProps = ({ cartItems, orderTotal }) => {
     };
 };
 
-const mapDispatchToProps = () => {
+const mapDispatchToProps = (dispatch) => {
     return {
-        onIncrease: (id) => {
-            console.log(`Increase ${id}`)
-        },
-        
-        onDecrease: (id) => {
-            console.log(`Decrease ${id}`)
-        },
-
-        onDelete: (id) => {
-            console.log(`Delete ${id}`)
-        }
+        onIncrease: (id) => dispatch(bookAddedToCart(id)),
+        onDecrease: (id) => dispatch(bookRemovedFromCart(id)),
+        onDelete: (id) => dispatch(allBooksRemovedFromCart(id))
     }
 };
 
