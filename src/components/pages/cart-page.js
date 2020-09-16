@@ -1,7 +1,9 @@
 import React from 'react';
 
+import ShoppingCartTable from '../shopping-cart-table';
+
 const CartPage = () => {
-    return <div>Cart Page</div>
+    return <ShoppingCartTable/>
 };
 
 export default CartPage;
