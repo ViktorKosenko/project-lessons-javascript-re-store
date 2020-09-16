@@ -45,3 +45,10 @@ export const fetchBooks = (dispatch, bookstoreService) => () => {
         .then((data) => dispatch(booksLoaded(data)))
         .catch((error) => dispatch(booksError(error)));
 }
+// Thunk  (store.js: import thunkMiddleware from 'redux-thunk';)
+// export const fetchBooks = (bookstoreService) => () => (dispatch) => {
+//     dispatch(booksRequested());
+//     bookstoreService.getBooks()
+//         .then((data) => dispatch(booksLoaded(data)))
+//         .catch((error) => dispatch(booksError(error)));
+// }

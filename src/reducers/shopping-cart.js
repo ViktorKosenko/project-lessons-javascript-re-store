@@ -41,11 +41,18 @@ const updateOrder = (state, bookId, quantity) => {
     if (!item && quantity > 0) {
         book = books.find((book) => book.id === bookId);
     }
-
     const newItem = updateCartItem(book, item, quantity);
+    const newCartItem = updateCartItems(cartItems, newItem, indexItem);
+    let itemTotal = 0,
+        orderTotal = 0;
+    newCartItem.forEach(item => {
+        itemTotal += item.count;
+        orderTotal += item.total;
+    });
     return {
-        orderTotal: 0,
-        cartItems: updateCartItems(cartItems, newItem, indexItem)
+        cartItems: newCartItem,
+        itemTotal: itemTotal,
+        orderTotal: orderTotal
     };
 };
 
@@ -55,6 +62,7 @@ const updateShoppingCart = (state, action) => {
     if (state === undefined) {
         return {
             cartItems: [],
+            itemTotal: 0,
             orderTotal: 0
         }
     };
